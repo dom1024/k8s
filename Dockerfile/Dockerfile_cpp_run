@@ -1,4 +1,4 @@
-FROM wusong1024/xone-cpp-dev:latest
+FROM centos:centos7.6.1810
 LABEL maintainer="<wusong1024@gmail.com>" \
       name="xone_cpp_run" \
       author="song.wu" \
@@ -10,7 +10,35 @@ LABEL maintainer="<wusong1024@gmail.com>" \
 # SET ENVIRONNEMENT
 ENV LANG zh_CN.UTF-8
 #COPY Resources /tmp/Resources
-RUN yum remove -y devtoolset-7-make devtoolset-7-gcc devtoolset-7-gcc-c++
+RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime &&\
+    yum-config-manager --add-repo http://mirrors.aliyun.com/repo/Centos-7.repo &&\
+    yum-config-manager --add-repo http://mirrors.xuncetech.com/xunce/xunce-dev/yum/el7/xunce-dev.repo &&\
+    yum install libuv-devel glog-devel leveldb-devel gflags-devel cyrus-sasl-devel boost-devel libuuid-devel -y &&\
+    yum install -y epel-release yum-plugin-fastestmirror  openssl-devel libcurl-devel unixODBC-devel &&\
+    yum install -y --enablerepo=xunce-dev \
+                 fastdfs-5.11\
+                 tinyxml2-7.0.0\
+                 xlslib-2.4.0\
+                 boost-1.53 \
+                 jsoncpp-1.8.0 \
+                 spdlog-1.1.0\
+                 uWebSockets-0.14.10\
+                 hiredis-0.14.0 \
+                 protobuf-3.2.1 \
+                 QuantLib-1.16 \
+                 mysql-community-client-8.0.18 \
+                 libzmq-4.2.1 \
+                 oracle-instantclient11.2-devel-11.2.0.4.0 \
+                 prometheus-cpp \
+                 zookeeper-client-3.5.5 \
+                 yaml-cpp-0.6.3  \
+                 hiredis-vip \
+                 librdkafka \
+                 sqlite-devel-3.30.1 \
+                 BRPC &&\                 
+    yum clean all && \
+    rm -rf /usr/lib/oracle/11.2/client64/lib/libociei.so &&\
+    rm -rf /usr/lib64/mysql/libmysqlclient.a
 
 
 EXPOSE 8000-12100
