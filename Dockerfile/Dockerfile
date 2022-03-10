@@ -15,8 +15,7 @@ RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime &&\
     yum-config-manager --add-repo http://mirrors.xuncetech.com/xunce/xunce-dev/yum/el7/xunce-dev.repo &&\
     yum install centos-release-scl -y &&\
     yum install devtoolset-7-make devtoolset-7-gcc devtoolset-7-gcc-c++ libuv-devel glog-devel leveldb-devel gflags-devel cyrus-sasl-devel boost-devel libuuid-devel -y &&\
-    yum install -y epel-release ntp yum-plugin-fastestmirror vim-enhanced ntp wget bash-completion elinks lrzsz dos2unix openssl-devel \
-    vim which gettext-devel libcurl-devel unixODBC-devel net-tools &&\
+    yum install -y epel-release yum-plugin-fastestmirror  openssl-devel libcurl-devel unixODBC-devel &&\
     yum install -y --enablerepo=xunce-dev \
                  fastdfs-5.11\
                  tinyxml2-7.0.0\
@@ -41,7 +40,9 @@ RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime &&\
                  BRPC &&\                 
     yum clean all && \
     echo "source /opt/rh/devtoolset-7/enable" >> /root/.bashrc &&\
-    sed -i '1034s/[<>]/"/g' /usr/include/mysql/mysql_com.h
+    sed -i '1034s/[<>]/"/g' /usr/include/mysql/mysql_com.h &&\
+    rm -rf /usr/lib/oracle/11.2/client64/lib/libociei.so &&\
+    rm -rf /usr/lib64/mysql/libmysqlclient.a
 
 
 #EXPOSE 8000-8900 9700-9800
