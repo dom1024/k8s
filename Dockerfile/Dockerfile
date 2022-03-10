@@ -13,8 +13,10 @@ ENV LANG zh_CN.UTF-8
 RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime &&\
     yum-config-manager --add-repo http://mirrors.aliyun.com/repo/Centos-7.repo &&\
     yum-config-manager --add-repo http://mirrors.xuncetech.com/xunce/xunce-dev/yum/el7/xunce-dev.repo &&\
-    yum install -y epel-release ntp yum-plugin-fastestmirror vim-enhanced ntp wget bash-completion elinks lrzsz dos2unix java-1.8.0-openjdk openssl-devel \
-    vim which gettext-devel libcurl-devel unixODBC-devel sudo net-tools &&\
+    yum install centos-release-scl -y &&\
+    yum install devtoolset-7-make devtoolset-7-gcc devtoolset-7-gcc-c++ libuv-devel glog-devel leveldb-devel gflags-devel cyrus-sasl-devel boost-devel libuuid-devel -y &&\
+    yum install -y epel-release ntp yum-plugin-fastestmirror vim-enhanced ntp wget bash-completion elinks lrzsz dos2unix openssl-devel \
+    vim which gettext-devel libcurl-devel unixODBC-devel net-tools &&\
     yum install -y --enablerepo=xunce-dev \
                  fastdfs-5.11\
                  tinyxml2-7.0.0\
@@ -26,14 +28,23 @@ RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime &&\
                  hiredis-0.14.0 \
                  protobuf-3.2.1 \
                  QuantLib-1.16 \
-                 mysql-community-client-8.0.18 \
+                 mysql-community-devel-8.0.18 \
                  libzmq-4.2.1 \
                  oracle-instantclient11.2-devel-11.2.0.4.0 \
                  prometheus-cpp \
                  zookeeper-client-3.5.5 \
-                 yaml-cpp-0.6.3 \
+                 yaml-cpp-0.6.3  \
+                 cmake-3.12.3 \
+                 hiredis-vip \
+                 librdkafka \
+                 sqlite-devel-3.30.1 \
+                 BRPC &&\                 
+    yum clean all && \
+    echo "source /opt/rh/devtoolset-7/enable" >> /root/.bashrc &&\
+    sed -i '1034s/[<>]/"/g' /usr/include/mysql/mysql_com.h
 
-EXPOSE 8000-8900 9700-9800
+
+#EXPOSE 8000-8900 9700-9800
 USER root
 VOLUME ["/sys/fs/cgroup"]
 # WORKDIR /data/XONE
