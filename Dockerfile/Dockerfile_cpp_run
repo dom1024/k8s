@@ -1,0 +1,20 @@
+FROM wusong1024/xone-cpp-dev:latest
+LABEL maintainer="<wusong1024@gmail.com>" \
+      name="xone_cpp_run" \
+      author="song.wu" \
+      vendor="xunce" \
+      version="v1.1" \
+      systemver="Centos7.6" \
+      desc="xone cpp runtime" \
+      build-date="20220310"   
+# SET ENVIRONNEMENT
+ENV LANG zh_CN.UTF-8
+#COPY Resources /tmp/Resources
+RUN yum remove -y devtoolset-7-make devtoolset-7-gcc devtoolset-7-gcc-c++
+
+
+EXPOSE 8000-12100
+USER root
+VOLUME ["/sys/fs/cgroup"]
+# WORKDIR /data/XONE
+CMD ["/usr/sbin/init"]

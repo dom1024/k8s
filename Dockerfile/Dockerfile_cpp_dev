@@ -1,9 +1,9 @@
 FROM centos:centos7.6.1810
 LABEL maintainer="<wusong1024@gmail.com>" \
-      name="xone_cpp" \
+      name="xone_cpp_dev" \
       author="song.wu" \
       vendor="xunce" \
-      version="v1.0" \
+      version="v1.1" \
       systemver="Centos7.6" \
       desc="xone cpp development" \
       build-date="20220310"   
